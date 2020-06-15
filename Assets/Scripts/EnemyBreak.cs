@@ -2,33 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTrigger : MonoBehaviour
+public class EnemyBreak : MonoBehaviour
 {
+    MeshRenderer Rend;
     public GameObject Particle;
-    public AudioSource Audio;
     ParticleSystem PS;
+    public AudioSource Audio;
     bool deth;
     // Start is called before the first frame update
     void Start()
     {
+        Rend = GetComponent<MeshRenderer>();
         PS = Particle.GetComponent<ParticleSystem>();
         Audio = GetComponent<AudioSource>();
+        deth = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(deth==true)
+        {
+            if(Audio.isPlaying==false)
+            {
+                this.gameObject.SetActive(false);
+            }
+        }
+ 
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")				 //　当たった相手のTagが”Wall”ならば・・
+        if (other.gameObject.tag == "Player")				
         {
-            this.gameObject.SetActive(false);
+            Rend.enabled = false;
+            this.gameObject.GetComponent<EneRotDis>().enabled = false;
             Instantiate(Particle, this.gameObject.transform.position, this.gameObject.transform.rotation, null);
             PS.Play();
             Audio.Play();
-            //　Invoke（○○秒後に他のメソッドに飛ばす関数）、2秒後に「ObjActive」に飛びます
+            deth = true;
         }
     }
 }

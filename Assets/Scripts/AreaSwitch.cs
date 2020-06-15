@@ -10,17 +10,21 @@ public class AreaSwitch : MonoBehaviour
     void Start()
     {
         EAD = Parlent.GetComponent<EneAllDis>();
+        
     }
 
     // Start is called On Trigger Object
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
-            EAD.InArea = true;
+        {
+            EAD.InArea = true;        }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player")
+        {
             EAD.InArea = false;
+        }
     }
 }

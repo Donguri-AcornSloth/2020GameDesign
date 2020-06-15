@@ -33,7 +33,7 @@ public class EneAllDis : MonoBehaviour
         Rend = GetComponent<Renderer>();
         Rend.material.color = Color.gray;
         Debug.Log(posArray.Length);
-        i = 0;
+        i = Random.Range(0, posArray.Length - 1);
     }
 
     // Update is called once per frame
