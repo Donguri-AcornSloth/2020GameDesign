@@ -42,7 +42,7 @@ public class EneAllDis : MonoBehaviour
         float pinDis = (posArray[i] - transform.position).sqrMagnitude; 
         if (pinDis <= 0.2f)
         {
-            i = Random.Range(0, posArray.Length - 1);
+            i = Random.Range(0, posArray.Length );
         }
         float distance = (transform.position - target).sqrMagnitude;
         if (distance <= 0.002f)
