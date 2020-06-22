@@ -5,9 +5,10 @@ using UnityEngine;
 public class Judge : MonoBehaviour
 {
     public int maxPower;
+    public int minPower;
     int Power;
     public bool kingSwitch;
-    public GameObject Text;
+    public GameObject resultText;
     public Judge eneJudge;
     public GameObject kingParticle;
     public GameObject normalParticle;
@@ -19,6 +20,7 @@ public class Judge : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        minPower = 0;
         kingPS = kingParticle.GetComponent<ParticleSystem>();
         normalPS = normalParticle.GetComponent<ParticleSystem>();
         AS = GetComponent<AudioSource>();
@@ -27,7 +29,7 @@ public class Judge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Power = Random.Range(0, maxPower);
+        Power = Random.Range(minPower, maxPower);
     }
     void OnTriggerEnter(Collider other)
     {
@@ -39,16 +41,18 @@ public class Judge : MonoBehaviour
             {
                 if(eneJudge.kingSwitch==true)
                 {
-                    Text.SetActive(true);
+                    resultText.SetActive(true);
                     Instantiate(kingParticle, other.gameObject.transform.position, other.gameObject.transform.rotation, null);
                     kingPS.Play();
                     AS.PlayOneShot(kingDeth);
+                    minPower += 1;
                 }
                 else
                 {
                     Instantiate(normalParticle, other.gameObject.transform.position, other.gameObject.transform.rotation, null);
                     normalPS.Play();
                     AS.PlayOneShot(normalDeth);
+                    minPower += 1;
                 }
                 other.gameObject.SetActive(false);
             }
@@ -64,16 +68,18 @@ public class Judge : MonoBehaviour
             {
                 if (eneJudge.kingSwitch == true)
                 {
-                    Text.SetActive(true);
+                    resultText.SetActive(true);
                     Instantiate(kingParticle, other.gameObject.transform.position, other.gameObject.transform.rotation, null);
                     kingPS.Play();
                     AS.PlayOneShot(kingDeth);
+                    minPower += 1;
                 }
                 else
                 {
                     Instantiate(normalParticle, other.gameObject.transform.position, other.gameObject.transform.rotation, null);
                     normalPS.Play();
                     AS.PlayOneShot(normalDeth);
+                    minPower += 1;
                 }
                 other.gameObject.SetActive(false);
             }
