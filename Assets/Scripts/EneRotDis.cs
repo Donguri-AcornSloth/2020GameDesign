@@ -14,7 +14,7 @@ public class EneRotDis : MonoBehaviour
     public int chasetime;
     public bool InArea;
     public Vector3 logPos;
-
+    public bool chaceMode;
     Vector3 rotPoint = Vector3.zero;
     Vector3 rotAxis = Vector3.zero;
     float rotNum;
@@ -36,7 +36,7 @@ public class EneRotDis : MonoBehaviour
         rotAngle = rotNum;
         resettime = patrolltime;
         time = resettime;
-        i = Random.Range(0, posArray.Length - 1);
+        i = Random.Range(0, posArray.Length);
     }
 
     // Update is called once per frame
@@ -49,8 +49,13 @@ public class EneRotDis : MonoBehaviour
         float pinDis = (posArray[i] - transform.position).sqrMagnitude;
         if(pinDis<=0.2f)
         {
-            i = Random.Range(0, posArray.Length - 1);
+            i = Random.Range(0, posArray.Length);
             Debug.Log(i);
+            if (i == posArray.Length) 
+            {
+                Debug.LogError("IDFailed");
+                i = Random.Range(0, posArray.Length);
+            }
         }
         transform.position = new Vector3(Mathf.RoundToInt(transform.position.x), transform.position.y, Mathf.RoundToInt(transform.position.z));
         time -= 1;
@@ -66,9 +71,12 @@ public class EneRotDis : MonoBehaviour
             }
             else if (InArea == true)
             {
-                targetMag = transform.position-Player.transform.position;
-                rotNum = rotNumPatroll;
-                resettime = chasetime;
+                if (chaceMode == true)
+                {
+                    targetMag = transform.position - Player.transform.position;
+                    rotNum = rotNumPatroll;
+                    resettime = chasetime;
+                }
             }
             if (targetMag.x > 0f)
             {
