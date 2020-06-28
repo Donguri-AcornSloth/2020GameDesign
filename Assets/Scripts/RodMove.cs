@@ -12,6 +12,11 @@ public class RodMove : MonoBehaviour
     float halfCube;
     public bool inRotate = false;
     Vector3 logPos;
+    public int leftLimit;
+    public int rightLimit;
+    public int upLimit;
+    public int downLimit;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,21 +31,37 @@ public class RodMove : MonoBehaviour
             return;
         if (Input.GetKey(KeyCode.RightArrow))
         {
+            if(gameObject.transform.position.x>=rightLimit)
+            {
+                return;
+            }
             rotPoint = transform.position + new Vector3(halfCube, -halfCube, 0f);
             rotAxis = new Vector3(0, 0, -1);
         }
         if (Input.GetKey(KeyCode.LeftArrow)) 
         {
+            if (gameObject.transform.position.x <= leftLimit)
+            {
+                return;
+            }
             rotPoint = transform.position + new Vector3(-halfCube, -halfCube, 0f);
             rotAxis = new Vector3(0, 0, 1);
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
+            if (gameObject.transform.position.z >= upLimit)
+            {
+                return;
+            }
             rotPoint = transform.position + new Vector3(0f, -halfCube, halfCube);
             rotAxis = new Vector3(1, 0, 0);
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
+            if (gameObject.transform.position.z <= downLimit)
+            {
+                return;
+            }
             rotPoint = transform.position + new Vector3(0f, -halfCube, -halfCube);
             rotAxis = new Vector3(-1, 0, 0);
         }
@@ -58,6 +79,7 @@ public class RodMove : MonoBehaviour
             angle += rotAngle;
             if(angle>90f)
             {
+                transform.position = new Vector3(Mathf.RoundToInt(transform.position.x), transform.position.y, Mathf.RoundToInt(transform.position.z));
                 rotAngle -= angle - 90f;
             }
             transform.RotateAround(rotPoint, rotAxis, rotAngle);
