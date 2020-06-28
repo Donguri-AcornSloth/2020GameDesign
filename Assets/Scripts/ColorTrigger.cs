@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ColorTrigger : MonoBehaviour
@@ -13,6 +14,7 @@ public class ColorTrigger : MonoBehaviour
     public GameObject downObj;
     ColorTrigger dTrigger;
 
+    GameObject thisPanel;
     MeshRenderer mRend;
     int colorSwitch;
     
@@ -24,6 +26,7 @@ public class ColorTrigger : MonoBehaviour
         rTrigger = rightObj.GetComponent<ColorTrigger>();
         uTrigger = upObj.GetComponent<ColorTrigger>();
         dTrigger = downObj.GetComponent<ColorTrigger>();
+        thisPanel = this.gameObject;
         mRend.enabled = false; 
         colorSwitch = 0;
     }
@@ -37,10 +40,12 @@ public class ColorTrigger : MonoBehaviour
             if (colorSwitch == 1)
             {
                 mRend.material.color = Color.white;
+                thisPanel.tag = "PlayerPanel";
             }
             else if(colorSwitch==2)
             {
                 mRend.material.color = Color.black;
+                thisPanel.tag = "EnemyPanel";
             }
         }
         if(lTrigger.colorSwitch==rTrigger.colorSwitch)
