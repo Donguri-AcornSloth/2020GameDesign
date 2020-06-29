@@ -1498,7 +1498,7 @@ MonoBehaviour:
   - {x: 1, y: 0.6, z: -1}
   time: 0
   resettime: 0
-  patrolltime: 25
+  patrolltime: 50
   Player: {fileID: 1586153784}
   chasetime: 0
   InArea: 0
