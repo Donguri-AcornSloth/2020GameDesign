@@ -16,7 +16,13 @@ public class ColorTrigger : MonoBehaviour
 
     GameObject thisPanel;
     MeshRenderer mRend;
-    int colorSwitch;
+    public int colorSwitch;
+    public bool colisionSwitch;
+
+
+    public AudioClip pClip;
+    public AudioClip eClip;
+    AudioSource Audio;
     
     // Start is called before the first frame update
     void Start()
@@ -26,6 +32,7 @@ public class ColorTrigger : MonoBehaviour
         rTrigger = rightObj.GetComponent<ColorTrigger>();
         uTrigger = upObj.GetComponent<ColorTrigger>();
         dTrigger = downObj.GetComponent<ColorTrigger>();
+        Audio = GetComponent<AudioSource>();
         thisPanel = this.gameObject;
         mRend.enabled = false; 
         colorSwitch = 0;
@@ -48,30 +55,47 @@ public class ColorTrigger : MonoBehaviour
                 thisPanel.tag = "EnemyPanel";
             }
         }
-        if(lTrigger.colorSwitch==rTrigger.colorSwitch)
+        if (colisionSwitch == true)
         {
-            if (lTrigger.colorSwitch > 0)
+            if (lTrigger.colorSwitch == rTrigger.colorSwitch)
             {
-                colorSwitch = lTrigger.colorSwitch;
+                if (lTrigger.colorSwitch > 0)
+                {
+                    colorSwitch = lTrigger.colorSwitch;
+                    colisionSwitch = false;
+                }
             }
-        }
-        if(uTrigger.colorSwitch==dTrigger.colorSwitch)
-        {
-            if(uTrigger.colorSwitch>0)
+            if (uTrigger.colorSwitch == dTrigger.colorSwitch)
             {
-                colorSwitch = uTrigger.colorSwitch;
+                if (uTrigger.colorSwitch > 0)
+                {
+                    colorSwitch = uTrigger.colorSwitch;
+                    colisionSwitch = false;
+                }
             }
+            colisionSwitch = false;
         }
     }
     private void OnTriggerEnter(Collider other)
     {
+
         if(other.gameObject.tag=="Player")
         {
             colorSwitch = 1;
+            Audio.PlayOneShot(pClip);
+            lTrigger.colisionSwitch = true;
+            rTrigger.colisionSwitch = true;
+            uTrigger.colisionSwitch = true;
+            dTrigger.colisionSwitch = true;
         }
         if(other.gameObject.tag=="Enemy")
         {
             colorSwitch = 2;
+            Audio.PlayOneShot(eClip);
+            lTrigger.colisionSwitch = true;
+            rTrigger.colisionSwitch = true;
+            uTrigger.colisionSwitch = true;
+            dTrigger.colisionSwitch = true;
         }
     }
 

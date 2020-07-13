@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     GameObject[] playerPanel;
     GameObject[] enemyPanel;
+    GameObject restPanel;
     int playerScore;
     int enemyScore;
     int restPanelScore;
@@ -25,6 +26,14 @@ public class GameManager : MonoBehaviour
     TextMesh pText;
     TextMesh eText;
     TextMesh rText;
+
+    public GameObject particle;
+    ParticleSystem pSystem;
+    public AudioClip WinClip;
+    public AudioClip LoseClip;
+    public AudioClip DrawClip;
+    AudioSource Audio;
+    int time;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +43,8 @@ public class GameManager : MonoBehaviour
         playerWinText.SetActive(false);
         enemyWinText.SetActive(false);
         drawText.SetActive(false);
+        Audio = GetComponent<AudioSource>();
+        pSystem = particle.GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -64,19 +75,40 @@ public class GameManager : MonoBehaviour
         }
         if (maxPanelcount == enemyScore + playerScore)
         {
+            time += 1;
             player.gameObject.SetActive(false);
             enemy.gameObject.SetActive(false);
             if (playerScore > enemyScore)
             {
-                playerWinText.SetActive(true);
+                if (time == 1)
+                {
+                    playerWinText.SetActive(true);
+                    Instantiate(particle,this.gameObject.transform);
+                    particle.AddComponent<ParentNuller>();
+                    pSystem.Play();
+                    Audio.PlayOneShot(WinClip);
+                    enemy.SetActive(false);
+                }
             }
             else if (enemyScore > playerScore)
             {
-                enemyWinText.SetActive(true);
+                if (time == 1)
+                {
+                    enemyWinText.SetActive(true);
+                    Instantiate(particle, this.gameObject.transform);
+                    particle.AddComponent<ParentNuller>();
+                    pSystem.Play();
+                    Audio.PlayOneShot(LoseClip);
+                    player.SetActive(false);
+                }
             }
             else
             {
-                drawText.SetActive(true);
+                if (time == 1)
+                {
+                    drawText.SetActive(true);
+                    Audio.PlayOneShot(DrawClip);
+                }
             }
 
         }
