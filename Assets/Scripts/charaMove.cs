@@ -34,7 +34,7 @@ public class charaMove : MonoBehaviour
         Vector3 dir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         charaCon.Move(dir * Time.deltaTime * playerSpeed);
         Debug.Log(dir);
-
+        /*
         if (dir != Vector3.zero)
         {
             Quaternion qua = Quaternion.LookRotation(dir);
@@ -44,7 +44,7 @@ public class charaMove : MonoBehaviour
         else
         {
             animCon.SetBool("Start", true);
-        }
+        }*/
 
         if (Input.GetKey(KeyCode.Space) && groundedPlayer)
         {
